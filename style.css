@@ -4,6 +4,7 @@
 
 .field {
     clear: both;
+    background-color: #e7eef8;
     align-items: flex-end;
     position: center;
     display: flex;
@@ -22,6 +23,7 @@
     border-radius: 3px;
     box-shadow: 0 0 35px 15px rgba(221, 221, 221, 1);
     box-shadow: 0 0 445px 15px #888888;
+    z-index: 1;
 }
 
 .black {
@@ -123,10 +125,6 @@ big {
     left: 0;
     right: 0;
     margin: 5px auto;
- 
-  
-  
-
 }
 
 .AppleDiv {
@@ -134,11 +132,126 @@ big {
     color: #505977;
     font-size: 38px;
     text-align: right;
-    margin-left: 133px;
+    margin-left: 115px;
     height: 45px;
-    width: 95px;
+    width: 113px;
     background-image: url(img/red-apple.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
+.options {
+    position: relative;
+    display: inline-flex;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #90bbf6;
+    box-shadow: 1px 1px 3px #888888;
+    text-align: right;
+    display: inline-block;
+    float: left;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    padding-right: 11px;
+    top: 2px;
+    height: 27px;
+    background: #90bbf6;
+    width: 120px;
+    box-shadow: 0 0 3px 2px #888888;
+    background-image: url(img/options.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size: 22px;
+    color: #FFF;
+    text-shadow: 1px 1px 2px #332f46;
+}
+    .options:hover {
+        background: #afd1ff;
+        border-color: #afd1ff;
+        background-image: url(img/options.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    .options::after {
+        content: "OPTIONS";       
+    }
+.optionsWnd {
+    position: absolute;
+    display: inline-block;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #bfd4f1;
+    box-shadow: 1px 1px 3px #888888;
+    text-align: left;
+    display: inline-block;
+    margin-top: 408px;
+    margin-bottom: 9px;
+    margin-left: 0px;
+    padding-right: 11px;
+    top: -245px;
+    height: 319px;
+    background: #9fb4d38f;
+    width: 326px;
+    box-shadow: 0 0 3px 2px #888888;
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size: 22px;
+    color: #FFF;
+    text-shadow: 1px 1px 2px #332f46;
+    z-index: 99;
+}
+ul, li {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    text-align:center;
+}
+.styleGrey {
+    margin: 10px 10px 10px 15px;
+    float: right;
+    position: inline-block;
+    display: initial;
+    background-color: #e7eef8;
+    width: 70px;
+    height: 20px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 3px #888888;
+}
+
+.stylePink {
+    margin: 10px 10px 10px 15px;
+    border-radius: 2px;
+    float: right;
+    position: inline-block;
+    display: initial;
+    background-color: #fde5e6;
+    width: 70px;
+    height: 20px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 3px #888888;
+}
+.styleBlue {
+    margin: 10px 10px 10px 15px;
+    border-radius: 2px;
+    float: right;
+    position: inline-block;
+    display: initial;
+    background-color: #76c1d4;
+    width: 70px;
+    height: 20px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 3px #888888;
+}
+.choosenStyle {
+    margin-top: 0px;
+    border: 10px;
+    border-radius: 10px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-color: #82ccc5;
+}
+form,input {
+    width: 315px;
+
+}

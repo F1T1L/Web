@@ -6,8 +6,11 @@ var row = 0,
     kostil = false,
     score = 0,
     speed = 300,
+    minApples,
+    maxApples,
     direction = 'left';
-
+var options = document.createElement( "div" );
+options.classList.add( "options" );
 var field = document.createElement( "div" );
 field.classList.add( "field" );
 document.body.prepend( field );
@@ -21,12 +24,91 @@ scoreDiv.innerHTML = 'Score ';
 scoreShell.classList.add( "scoreShell" );
 scoreShell.append( scoreDiv );
 scoreShell.append( AppleDiv );
+field.after( options );
 var scoreDivNumber = document.createElement( "div" );
 scoreDivNumber.classList.add( "scoreNumber" );
 scoreDivNumber.innerHTML = '<b><i><big>' + score + '</big></i></b>';
 scoreDiv.append( scoreDivNumber );
+var optionsWnd = document.createElement( "div" );
+var stylePink = document.createElement( "div" );
+stylePink.classList.add( "stylePink" );
+var styleGrey = document.createElement( "div" );
+styleGrey.classList.add( "styleGrey" );
+var styleBlue = document.createElement( "div" );
+styleBlue.classList.add( "styleBlue" );   
+//background-color: #fde5e6;
+stylePink.onclick = function () {
+    field.style.backgroundColor = "#fde5e6";
+    field.style.borderColor = "#e3d2d3";
+    scoreDiv.style.backgroundColor = "#ceafb0";
+    scoreDiv.style.borderColor = "#e3d2d3";
+    document.body.style.backgroundColor = "#fde5e6";
+    stylePink.classList.add( "choosenStyle" );
+    styleGrey.classList.remove( "choosenStyle" );
+    styleBlue.classList.remove( "choosenStyle" );
+    
+}
+styleGrey.onclick = function () {
+    field.style.backgroundColor = "#e7eef8";
+    field.style.borderColor = "#e9eded";
+    scoreDiv.style.backgroundColor = "#9bcbc7";
+    scoreDiv.style.borderColor = "#e9eded";
+    document.body.style.backgroundColor = "white";
+    styleGrey.classList.add( "choosenStyle" );
+    stylePink.classList.remove( "choosenStyle" );
+    styleBlue.classList.remove( "choosenStyle" );
+
+}
+styleBlue.onclick = function () {
+    field.style.backgroundColor = "#c2dde6";
+    field.style.borderColor = "#87bed0";
+    scoreDiv.style.backgroundColor = "#09868b";
+    scoreDiv.style.borderColor = "#87bed0";
+    document.body.style.backgroundColor = "#76c1d4";
+    styleBlue.classList.add( "choosenStyle" );
+    stylePink.classList.remove( "choosenStyle" );
+    styleGrey.classList.remove( "choosenStyle" );
+}
+
+var toggle = true;
+
+options.onclick = function () {
+    console.log( "Options button CLICKED" );
+    options.before( optionsWnd );
+    styleGrey.classList.add( "choosenStyle" );
+    // optionsWnd.toggle = display ? hide or show;
+    if ( toggle ) {
+        toggle = false;
+        optionsWnd.classList.add( "optionsWnd" );
+        
+      
+        optionsWnd.innerHTML = "<ul>" +
+            "<li>Speed of snake:<br>" +
+            '<form onsubmit="return setSpeed()" oninput="speed= level.value = flevel.valueAsNumber">' +
+            '<input name = "flevel" id = "flying" type = "range" min = "50" max = "400" value = "300" step = "10" onchange=\'setSpeed()\' > '+
+            '<output for= "flying" name = "level">300</output>'+
+            '</form >' +  "</li><hr>" +           
+         //   "<li>Amount of appeles to spawn:</li>" +
+            // "<li>skin of snake:</li>" +
+            "<li>Change color theme:<br>"+
+            "</li > " +
+            "</ul >";
+        var elem_li = document.getElementsByTagName( "li" )[1];
+        elem_li.appendChild( styleGrey );
+        elem_li.appendChild( stylePink );
+        elem_li.appendChild( styleBlue );
 
 
+    } else {
+        toggle = true;
+        optionsWnd.classList.remove( "optionsWnd" );
+        optionsWnd.innerHTML = '';
+    }    
+}
+function setSpeed() {    
+    console.log( "setSpeed: " + speed );
+    return false;
+}
 
 function fadeIn() {
     scoreDivNumber.classList.remove( "animation" );
@@ -46,18 +128,19 @@ for ( let i = 0; i < 400; i++ ) {
 }
 
 
-field = document.querySelectorAll( ".square" );
+var squares = document.querySelectorAll( ".square" );
+
 /*
 for ( let i = 0; i < 400; i++ ) {
     if ( i % 20 === 0 ) { row++; }
 
     if ( row % 2 === 0 ) {
         if ( i % 2 === 0 ) {
-            field[i].classList.add( "black" );
+            squares[i].classList.add( "black" );
         }
     } else {
         if ( i % 2 !== 0 ) {
-            field[i].classList.add( "black" );
+            squares[i].classList.add( "black" );
         }
     }
 }
@@ -73,15 +156,17 @@ function getRandom( min, max ) {
     max = Math.floor( max );
     return Math.floor( Math.random() * ( max - min + 1 ) ) + min; //Максимум и минимум включаются
 }
-function createObject( name ) {
-    for ( let i = 0; i <= getRandom( 1, 10 ); i++ ) {
-        field[getRandom( 0, 400 )].classList.add( name );
+function createObject( name,  min =1 , max =10) {  
+    for ( let i = 0; i <= getRandom( min, max ); i++ ) {
+        squares[getRandom( 0, 400 )].classList.add( name );
     }
    
     let apples = document.querySelectorAll( ".apple" );
     countApples = apples.length;
     AppleDiv.innerHTML = 'x ' + countApples;
-    console.log( "Spawned: " + apples.length + "apples")
+    console.log( "Spawned: " + apples.length + " apples" );
+    console.log( "Min: " + min + " Max: " + max );
+    
 }
 
 
@@ -140,11 +225,14 @@ createSnake();
 
 var interval = setInterval( move, speed );
 
+
 function startGame() {
    
 }
 
-function move() {
+function move() {    
+    clearInterval( interval );
+    interval = setInterval( move, speed );
     snakeBody[0].classList.remove( "snakeHead" );
     snakeBody[snakeBody.length - 1].classList.remove( "snakeBody" );
     snakeBody.pop();
