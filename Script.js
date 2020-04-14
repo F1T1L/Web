@@ -225,7 +225,7 @@ function gameOver() {
 
 createObject( "apple" );
 createSnake();
-
+startGame();
 
 
 function startGame() {
