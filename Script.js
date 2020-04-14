@@ -5,9 +5,7 @@ var row = 0,
     countApples,
     kostil = false,
     score = 0,
-    speed = 300,
-    minApples,
-    maxApples,
+    speed = 300,    
     direction = 'left';
 var options = document.createElement( "div" );
 options.classList.add( "options" );
@@ -35,9 +33,11 @@ stylePink.classList.add( "stylePink" );
 var styleGrey = document.createElement( "div" );
 styleGrey.classList.add( "styleGrey" );
 var styleBlue = document.createElement( "div" );
-styleBlue.classList.add( "styleBlue" );   
+styleBlue.classList.add( "styleBlue" );
 //background-color: #fde5e6;
+var currentStyleGrey = true;
 stylePink.onclick = function () {
+    currentStyleGrey = false;
     field.style.backgroundColor = "#fde5e6";
     field.style.borderColor = "#e3d2d3";
     scoreDiv.style.backgroundColor = "#ceafb0";
@@ -46,9 +46,9 @@ stylePink.onclick = function () {
     stylePink.classList.add( "choosenStyle" );
     styleGrey.classList.remove( "choosenStyle" );
     styleBlue.classList.remove( "choosenStyle" );
-    
 }
 styleGrey.onclick = function () {
+    currentStyleGrey = true;
     field.style.backgroundColor = "#e7eef8";
     field.style.borderColor = "#e9eded";
     scoreDiv.style.backgroundColor = "#9bcbc7";
@@ -57,9 +57,9 @@ styleGrey.onclick = function () {
     styleGrey.classList.add( "choosenStyle" );
     stylePink.classList.remove( "choosenStyle" );
     styleBlue.classList.remove( "choosenStyle" );
-
 }
 styleBlue.onclick = function () {
+    currentStyleGrey = false;
     field.style.backgroundColor = "#c2dde6";
     field.style.borderColor = "#87bed0";
     scoreDiv.style.backgroundColor = "#09868b";
@@ -73,24 +73,27 @@ styleBlue.onclick = function () {
 var toggle = true;
 
 options.onclick = function () {
-    console.log( "Options button CLICKED" );
+   // console.log( "Options button CLICKED" );
     options.before( optionsWnd );
-    styleGrey.classList.add( "choosenStyle" );
+    if ( currentStyleGrey ) {        
+        styleGrey.onclick();
+    } else {
+        currentStyleGrey = false;        
+        styleGrey.classList.remove( "choosenStyle" );
+    }
     // optionsWnd.toggle = display ? hide or show;
     if ( toggle ) {
         toggle = false;
         optionsWnd.classList.add( "optionsWnd" );
-        
-      
         optionsWnd.innerHTML = "<ul>" +
             "<li>Speed of snake:<br>" +
             '<form onsubmit="return setSpeed()" oninput="speed= level.value = flevel.valueAsNumber">' +
-            '<input name = "flevel" id = "flying" type = "range" min = "50" max = "400" value = "300" step = "10" onchange=\'setSpeed()\' > '+
-            '<output for= "flying" name = "level">300</output>'+
-            '</form >' +  "</li><hr>" +           
-         //   "<li>Amount of appeles to spawn:</li>" +
+            '<input name = "flevel" id = "flying" type = "range" min = "50" max = "400" value = "300" step = "10" onchange=\'setSpeed()\' > ' +
+            '<output for= "flying" name = "level">300</output>' +
+            '</form >' + "</li><hr>" +
+            //   "<li>Amount of appeles to spawn:</li>" +
             // "<li>skin of snake:</li>" +
-            "<li>Change color theme:<br>"+
+            "<li>Change color theme:<br>" +
             "</li > " +
             "</ul >";
         var elem_li = document.getElementsByTagName( "li" )[1];
@@ -98,14 +101,13 @@ options.onclick = function () {
         elem_li.appendChild( stylePink );
         elem_li.appendChild( styleBlue );
 
-
     } else {
         toggle = true;
         optionsWnd.classList.remove( "optionsWnd" );
         optionsWnd.innerHTML = '';
-    }    
+    }
 }
-function setSpeed() {    
+function setSpeed() {
     console.log( "setSpeed: " + speed );
     return false;
 }
@@ -156,17 +158,17 @@ function getRandom( min, max ) {
     max = Math.floor( max );
     return Math.floor( Math.random() * ( max - min + 1 ) ) + min; //Максимум и минимум включаются
 }
-function createObject( name,  min =1 , max =10) {  
+function createObject( name, min = 1, max = 10 ) {
     for ( let i = 0; i <= getRandom( min, max ); i++ ) {
         squares[getRandom( 0, 400 )].classList.add( name );
     }
-   
+
     let apples = document.querySelectorAll( ".apple" );
     countApples = apples.length;
     AppleDiv.innerHTML = 'x ' + countApples;
     console.log( "Spawned: " + apples.length + " apples" );
     console.log( "Min: " + min + " Max: " + max );
-    
+
 }
 
 
@@ -227,10 +229,10 @@ var interval = setInterval( move, speed );
 
 
 function startGame() {
-   
+
 }
 
-function move() {    
+function move() {
     clearInterval( interval );
     interval = setInterval( move, speed );
     snakeBody[0].classList.remove( "snakeHead" );
@@ -296,16 +298,16 @@ function move() {
             }
 
             console.log( "speed: " + speed );
-           // console.log( "score=" + score );
+            // console.log( "score=" + score );
             apple.classList.remove( "apple" );
             countApples -= 1;
             AppleDiv.innerHTML = 'x ' + countApples;
-           // console.log( "countApples= " + countApples );
+            // console.log( "countApples= " + countApples );
 
             if ( countApples <= 0 ) {
                 createObject( "apple" );
                 console.log( "Respawn!" );
-                
+
             }
 
             let tempX = snakeBody[snakeBody.length - 1].getAttribute( 'x' );
@@ -336,12 +338,12 @@ window.addEventListener( 'keydown', function ( e ) {
     if ( kostil == true ) {
 
         if ( e.keyCode === 37 && direction !== 'right' ) {
-         //   console.log( "left" );
+            //   console.log( "left" );
             direction = 'left';
             kostil = false;
         } else if ( e.keyCode === 38 && direction !== 'down' ) {
             direction = 'up';
-           // console.log( "up" );
+            // console.log( "up" );
             kostil = false;
         } else if ( e.keyCode === 39 && direction !== 'left' ) {
             direction = 'right';

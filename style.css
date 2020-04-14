@@ -198,7 +198,7 @@ big {
     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size: 22px;
     color: #FFF;
-    text-shadow: 1px 1px 2px #332f46;
+    text-shadow: 0px 0px 2px #332f46, 0 0 0.1em rgba(15, 29, 8, 0.46), 0 0 0.2em rgba(39, 8, 8, 0.47);
     z-index: 99;
 }
 ul, li {
@@ -214,7 +214,7 @@ ul, li {
     display: initial;
     background-color: #e7eef8;
     width: 70px;
-    height: 20px;
+    height: 35px;
     border-radius: 2px;
     box-shadow: 1px 1px 3px #888888;
 }
@@ -227,7 +227,7 @@ ul, li {
     display: initial;
     background-color: #fde5e6;
     width: 70px;
-    height: 20px;
+    height: 35px;
     border-radius: 2px;
     box-shadow: 1px 1px 3px #888888;
 }
@@ -239,7 +239,7 @@ ul, li {
     display: initial;
     background-color: #76c1d4;
     width: 70px;
-    height: 20px;
+    height: 35px;
     border-radius: 2px;
     box-shadow: 1px 1px 3px #888888;
 }
@@ -249,9 +249,8 @@ ul, li {
     border-radius: 10px;
     border-top-style: solid;
     border-bottom-style: solid;
-    border-color: #82ccc5;
+    border-color: #193b6e94;
 }
 form,input {
     width: 315px;
-
 }
