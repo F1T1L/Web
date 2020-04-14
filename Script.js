@@ -5,7 +5,8 @@ var row = 0,
     countApples,
     kostil = false,
     score = 0,
-    speed = 300,    
+    speed = 300,
+    interval,
     direction = 'left';
 var options = document.createElement( "div" );
 options.classList.add( "options" );
@@ -56,7 +57,7 @@ styleGrey.onclick = function () {
     document.body.style.backgroundColor = "white";
     styleGrey.classList.add( "choosenStyle" );
     stylePink.classList.remove( "choosenStyle" );
-    styleBlue.classList.remove( "choosenStyle" );
+    styleBlue.classList.remove( "choosenStyle" );    
 }
 styleBlue.onclick = function () {
     currentStyleGrey = false;
@@ -73,12 +74,12 @@ styleBlue.onclick = function () {
 var toggle = true;
 
 options.onclick = function () {
-   // console.log( "Options button CLICKED" );
+    // console.log( "Options button CLICKED" );
     options.before( optionsWnd );
-    if ( currentStyleGrey ) {        
+    if ( currentStyleGrey ) {
         styleGrey.onclick();
     } else {
-        currentStyleGrey = false;        
+        currentStyleGrey = false;
         styleGrey.classList.remove( "choosenStyle" );
     }
     // optionsWnd.toggle = display ? hide or show;
@@ -225,11 +226,10 @@ function gameOver() {
 createObject( "apple" );
 createSnake();
 
-var interval = setInterval( move, speed );
 
 
 function startGame() {
-
+    move();
 }
 
 function move() {
