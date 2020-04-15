@@ -35,8 +35,8 @@ var styleGrey = document.createElement( "div" );
 styleGrey.classList.add( "styleGrey" );
 var styleBlue = document.createElement( "div" );
 styleBlue.classList.add( "styleBlue" );
-//background-color: #fde5e6;
 var currentStyleGrey = true;
+
 stylePink.onclick = function () {
     currentStyleGrey = false;
     field.style.backgroundColor = "#fde5e6";
@@ -57,7 +57,7 @@ styleGrey.onclick = function () {
     document.body.style.backgroundColor = "white";
     styleGrey.classList.add( "choosenStyle" );
     stylePink.classList.remove( "choosenStyle" );
-    styleBlue.classList.remove( "choosenStyle" );    
+    styleBlue.classList.remove( "choosenStyle" );
 }
 styleBlue.onclick = function () {
     currentStyleGrey = false;
@@ -70,6 +70,18 @@ styleBlue.onclick = function () {
     stylePink.classList.remove( "choosenStyle" );
     styleGrey.classList.remove( "choosenStyle" );
 }
+optionsWnd.classList.add( "optionsWnd" );
+optionsWnd.innerHTML = "<ul>" +
+    "<li>Speed of snake:<br>" +
+    '<form onsubmit="return setSpeed()" oninput="speed= level.value = flevel.valueAsNumber"  >' +
+    '<input name = "flevel" id = "flying" type = "range" min = "50" max = "400" value = "300" step = "10" onchange="setSpeed()" > ' +
+    '<output for= "flying" name = "level">300</output>' +
+    '</form >' + "</li><hr>" +
+    //   "<li>Amount of appeles to spawn:</li>" +
+    // "<li>skin of snake:</li>" +
+    "<li>Change color theme:<br>" +
+    "</li > " +
+    "</ul >";
 
 var toggle = true;
 
@@ -82,34 +94,27 @@ options.onclick = function () {
         currentStyleGrey = false;
         styleGrey.classList.remove( "choosenStyle" );
     }
-    // optionsWnd.toggle = display ? hide or show;
+    // optionsWnd.toggle = display ? hide or show;   
     if ( toggle ) {
-        toggle = false;
-        optionsWnd.classList.add( "optionsWnd" );
-        optionsWnd.innerHTML = "<ul>" +
-            "<li>Speed of snake:<br>" +
-            '<form onsubmit="return setSpeed()" oninput="speed= level.value = flevel.valueAsNumber">' +
-            '<input name = "flevel" id = "flying" type = "range" min = "50" max = "400" value = "300" step = "10" onchange=\'setSpeed()\' > ' +
-            '<output for= "flying" name = "level">300</output>' +
-            '</form >' + "</li><hr>" +
-            //   "<li>Amount of appeles to spawn:</li>" +
-            // "<li>skin of snake:</li>" +
-            "<li>Change color theme:<br>" +
-            "</li > " +
-            "</ul >";
+        toggle = false;        
+        optionsWnd.style.visibility = "visible";  
         var elem_li = document.getElementsByTagName( "li" )[1];
         elem_li.appendChild( styleGrey );
         elem_li.appendChild( stylePink );
         elem_li.appendChild( styleBlue );
-
+        
     } else {
         toggle = true;
-        optionsWnd.classList.remove( "optionsWnd" );
-        optionsWnd.innerHTML = '';
+        optionsWnd.style.visibility = "hidden";
+      //  optionsWnd.classList.remove( "optionsWnd" );  удалить грубо.
+      //  optionsWnd.innerHTML = '';
     }
 }
-function setSpeed() {
-    console.log( "setSpeed: " + speed );
+
+function setSpeed() {    
+    console.log( "setSpeed(): " + speed );
+    document.getElementsByTagName( "input" )[0].valueAsNumber = speed;
+    document.getElementsByTagName( "output" )[0].value = speed; 
     return false;
 }
 
@@ -161,7 +166,16 @@ function getRandom( min, max ) {
 }
 function createObject( name, min = 1, max = 10 ) {
     for ( let i = 0; i <= getRandom( min, max ); i++ ) {
-        squares[getRandom( 0, 400 )].classList.add( name );
+        let temp = getRandom( 0, 400 );
+        squares[temp].classList.add( name );
+        if ( countApples === 0 ) {
+            for ( let item of snakeBody ) {
+                if ( item.classList.contains( 'apple' ) ) { //проверка на наличие класса
+                    console.log( "APPLE IN SNAKE!!! DELETING THIS APPLE!" );
+                    squares[temp].classList.remove( name );
+                }
+            }
+        }
     }
 
     let apples = document.querySelectorAll( ".apple" );
@@ -197,11 +211,7 @@ function createSnake() {
             snakeBody[0].classList.remove( "snakeHead" );
             createSnake();
         }
-
     }
-
-
-
 }
 function gameOver() {
 
@@ -226,7 +236,6 @@ function gameOver() {
 createObject( "apple" );
 createSnake();
 startGame();
-
 
 function startGame() {
     move();
@@ -298,6 +307,7 @@ function move() {
             }
 
             console.log( "speed: " + speed );
+            setSpeed();
             // console.log( "score=" + score );
             apple.classList.remove( "apple" );
             countApples -= 1;
@@ -307,7 +317,6 @@ function move() {
             if ( countApples <= 0 ) {
                 createObject( "apple" );
                 console.log( "Respawn!" );
-
             }
 
             let tempX = snakeBody[snakeBody.length - 1].getAttribute( 'x' );
@@ -328,13 +337,12 @@ function move() {
 
     }
     kostil = true;
-
     //  console.log( "x=" + x + "  y=" + y );
 }
 
 
 window.addEventListener( 'keydown', function ( e ) {
-
+    
     if ( kostil == true ) {
 
         if ( e.keyCode === 37 && direction !== 'right' ) {
