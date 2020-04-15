@@ -84,9 +84,10 @@ optionsWnd.innerHTML = "<ul>" +
     "</ul >";
 
 var toggle = true;
-
+// window.close(); –∑–∞–∫—Ä—ã—Ç—å –í–ö–õ–ê–î–ö–£ =–≤—ã–π—Ç–∏ –∏–∑ –∏–≥—Ä—ã.
 options.onclick = function () {
     // console.log( "Options button CLICKED" );
+    window.close();
     options.before( optionsWnd );
     if ( currentStyleGrey ) {
         styleGrey.onclick();
@@ -94,27 +95,27 @@ options.onclick = function () {
         currentStyleGrey = false;
         styleGrey.classList.remove( "choosenStyle" );
     }
-    // optionsWnd.toggle = display ? hide or show;   
+    // optionsWnd.toggle = display ? hide or show;
     if ( toggle ) {
-        toggle = false;        
-        optionsWnd.style.visibility = "visible";  
+        toggle = false;
+        optionsWnd.style.visibility = "visible";
         var elem_li = document.getElementsByTagName( "li" )[1];
         elem_li.appendChild( styleGrey );
         elem_li.appendChild( stylePink );
         elem_li.appendChild( styleBlue );
-        
+
     } else {
         toggle = true;
         optionsWnd.style.visibility = "hidden";
-      //  optionsWnd.classList.remove( "optionsWnd" );  Û‰‡ÎËÚ¸ „Û·Ó.
-      //  optionsWnd.innerHTML = '';
+        //  optionsWnd.classList.remove( "optionsWnd" );  —É–¥–∞–ª–∏—Ç—å –≥—Ä—É–±–æ.
+        //  optionsWnd.innerHTML = '';
     }
 }
 
-function setSpeed() {    
+function setSpeed() {
     console.log( "setSpeed(): " + speed );
     document.getElementsByTagName( "input" )[0].valueAsNumber = speed;
-    document.getElementsByTagName( "output" )[0].value = speed; 
+    document.getElementsByTagName( "output" )[0].value = speed;
     return false;
 }
 
@@ -128,41 +129,42 @@ function changeText() {
     setTimeout( fadeIn, 800 );
 }
 
-
 for ( let i = 0; i < 400; i++ ) {
-    if ( x > 20 ) { y++; x = 1; }
+    if ( x > 20 ) {
+        y++;
+        x = 1;
+    }
     field.innerHTML += '<div class="square" X="' + x + '" Y="' + y + '"></div>';
     x++;
 }
-
 
 var squares = document.querySelectorAll( ".square" );
 
 /*
 for ( let i = 0; i < 400; i++ ) {
-    if ( i % 20 === 0 ) { row++; }
+if ( i % 20 === 0 ) { row++; }
 
-    if ( row % 2 === 0 ) {
-        if ( i % 2 === 0 ) {
-            squares[i].classList.add( "black" );
-        }
-    } else {
-        if ( i % 2 !== 0 ) {
-            squares[i].classList.add( "black" );
-        }
-    }
+if ( row % 2 === 0 ) {
+if ( i % 2 === 0 ) {
+squares[i].classList.add( "black" );
 }
-*/
+} else {
+if ( i % 2 !== 0 ) {
+squares[i].classList.add( "black" );
+}
+}
+}
+ */
 
 /*
 function random() {
-    return Math.floor( Math.random() * 400 ); //0-400
+return Math.floor( Math.random() * 400 ); //0-400
 }
-*/
+ */
 function getRandom( min, max ) {
     min = Math.ceil( min );
     max = Math.floor( max );
-    return Math.floor( Math.random() * ( max - min + 1 ) ) + min; //Ã‡ÍÒËÏÛÏ Ë ÏËÌËÏÛÏ ‚ÍÎ˛˜‡˛ÚÒˇ
+    return Math.floor( Math.random() * ( max - min + 1 ) ) + min; //–ú–∞–∫—Å–∏–º—É–º –∏ –º–∏–Ω–∏–º—É–º –≤–∫–ª—é—á–∞—é—Ç—Å—è
 }
 function createObject( name, min = 1, max = 10 ) {
     for ( let i = 0; i <= getRandom( min, max ); i++ ) {
@@ -170,7 +172,7 @@ function createObject( name, min = 1, max = 10 ) {
         squares[temp].classList.add( name );
         if ( countApples === 0 ) {
             for ( let item of snakeBody ) {
-                if ( item.classList.contains( 'apple' ) ) { //ÔÓ‚ÂÍ‡ Ì‡ Ì‡ÎË˜ËÂ ÍÎ‡ÒÒ‡
+                if ( item.classList.contains( 'apple' ) ) { //–ø—Ä–æ–≤–µ—Ä–∫–∞ –Ω–∞ –Ω–∞–ª–∏—á–∏–µ –∫–ª–∞—Å—Å–∞
                     console.log( "APPLE IN SNAKE!!! DELETING THIS APPLE!" );
                     squares[temp].classList.remove( name );
                 }
@@ -185,7 +187,6 @@ function createObject( name, min = 1, max = 10 ) {
     console.log( "Min: " + min + " Max: " + max );
 
 }
-
 
 function createSnake() {
     x = getRandom( 1, 15 );
@@ -203,7 +204,7 @@ function createSnake() {
     console.log( "createSnake: x=" + x + " y=" + y );
 
     for ( let item of snakeBody ) {
-        if ( item.classList.contains( 'apple' ) ) { //ÔÓ‚ÂÍ‡ Ì‡ Ì‡ÎË˜ËÂ ÍÎ‡ÒÒ‡
+        if ( item.classList.contains( 'apple' ) ) { //–ø—Ä–æ–≤–µ—Ä–∫–∞ –Ω–∞ –Ω–∞–ª–∏—á–∏–µ –∫–ª–∞—Å—Å–∞
             console.log( "ReCreating of Snake" );
             for ( let i = 0; i < snakeBody.length; i++ ) {
                 snakeBody[i].classList.remove( "snakeBody" );
@@ -337,12 +338,10 @@ function move() {
 
     }
     kostil = true;
-    //  console.log( "x=" + x + "  y=" + y );
 }
 
-
 window.addEventListener( 'keydown', function ( e ) {
-    
+
     if ( kostil == true ) {
 
         if ( e.keyCode === 37 && direction !== 'right' ) {
@@ -365,20 +364,19 @@ window.addEventListener( 'keydown', function ( e ) {
     }
 
     /*
-        switch ( e.code )
-        {
-            case 'ArrowDown':
-                console.log( "left" );
-                break;
-            case ( 38  ):
-               
-                break;
-            case ( 39 && ( direction !== 'left' ) ):
-                
-                break;
-            case ( 40 && ( direction !== 'up' ) ):
-                
-                break;
-        }
-    */
+    switch ( e.code ) //–º–æ–∂–Ω–æ —Å–¥–µ–ª–∞—Ç—å –ø–æ –Ω–æ–º–µ—Ä—É –∫–ª–∞–≤–∏—à–∏ —á—Ç–æ–± –¥–≤–∏–≥–∞—Ç—å —á–µ—Ä–µ–∑ WASD + —Å—Ç—Ä–µ–ª–∫–∏.{
+    case 'ArrowDown':
+    console.log( "left" );
+    break;
+    case ( 38  ):
+
+    break;
+    case ( 39 && ( direction !== 'left' ) ):
+
+    break;
+    case ( 40 && ( direction !== 'up' ) ):
+
+    break;
+    }
+     */
 } );
