@@ -84,7 +84,7 @@ optionsWnd.innerHTML = "<ul>" +
     "</ul >";
 
 var toggle = true;
-// window.close(); Р·Р°РєСЂС‹С‚СЊ Р’РљР›РђР”РљРЈ =РІС‹Р№С‚Рё РёР· РёРіСЂС‹.
+// window.close(); закрыть ВКЛАДКУ =выйти из игры.
 options.onclick = function () {
     // console.log( "Options button CLICKED" );
     window.close();
@@ -107,7 +107,7 @@ options.onclick = function () {
     } else {
         toggle = true;
         optionsWnd.style.visibility = "hidden";
-        //  optionsWnd.classList.remove( "optionsWnd" );  СѓРґР°Р»РёС‚СЊ РіСЂСѓР±Рѕ.
+        //  optionsWnd.classList.remove( "optionsWnd" );  удалить грубо.
         //  optionsWnd.innerHTML = '';
     }
 }
@@ -164,7 +164,7 @@ return Math.floor( Math.random() * 400 ); //0-400
 function getRandom( min, max ) {
     min = Math.ceil( min );
     max = Math.floor( max );
-    return Math.floor( Math.random() * ( max - min + 1 ) ) + min; //РњР°РєСЃРёРјСѓРј Рё РјРёРЅРёРјСѓРј РІРєР»СЋС‡Р°СЋС‚СЃСЏ
+    return Math.floor( Math.random() * ( max - min + 1 ) ) + min; //Максимум и минимум включаются
 }
 function createObject( name, min = 1, max = 10 ) {
     for ( let i = 0; i <= getRandom( min, max ); i++ ) {
@@ -172,7 +172,7 @@ function createObject( name, min = 1, max = 10 ) {
         squares[temp].classList.add( name );
         if ( countApples === 0 ) {
             for ( let item of snakeBody ) {
-                if ( item.classList.contains( 'apple' ) ) { //РїСЂРѕРІРµСЂРєР° РЅР° РЅР°Р»РёС‡РёРµ РєР»Р°СЃСЃР°
+                if ( item.classList.contains( 'apple' ) ) { //проверка на наличие класса
                     console.log( "APPLE IN SNAKE!!! DELETING THIS APPLE!" );
                     squares[temp].classList.remove( name );
                 }
@@ -188,195 +188,196 @@ function createObject( name, min = 1, max = 10 ) {
 
 }
 
-function createSnake() {
-    x = getRandom( 1, 15 );
-    y = getRandom( 1, 20 );
-    snakeBody = [
-        document.querySelector( ' [x = "' + Number( x ) + '"][y = "' + Number( y ) + '"] ' ),
-        document.querySelector( ' [x = "' + ( Number( x ) + 1 ) + '"][y = "' + Number( y ) + '"] ' ),
-        document.querySelector( ' [x = "' + ( Number( x ) + 2 ) + '"][y = "' + Number( y ) + '"] ' ),
-        document.querySelector( ' [x = "' + ( Number( x ) + 3 ) + '"][y = "' + Number( y ) + '"] ' ),
-        document.querySelector( ' [x = "' + ( Number( x ) + 4 ) + '"][y = "' + Number( y ) + '"] ' )];
-    for ( let i = 0; i < snakeBody.length; i++ ) {
-        snakeBody[i].classList.add( "snakeBody" );
-    }
-    snakeBody[0].classList.add( "snakeHead" );
-    console.log( "createSnake: x=" + x + " y=" + y );
+    function createSnake() {
+        x = getRandom( 1, 15 );
+        y = getRandom( 1, 20 );
+        snakeBody = [
+            document.querySelector( ' [x = "' + Number( x ) + '"][y = "' + Number( y ) + '"] ' ),
+            document.querySelector( ' [x = "' + ( Number( x ) + 1 ) + '"][y = "' + Number( y ) + '"] ' ),
+            document.querySelector( ' [x = "' + ( Number( x ) + 2 ) + '"][y = "' + Number( y ) + '"] ' ),
+            document.querySelector( ' [x = "' + ( Number( x ) + 3 ) + '"][y = "' + Number( y ) + '"] ' ),
+            document.querySelector( ' [x = "' + ( Number( x ) + 4 ) + '"][y = "' + Number( y ) + '"] ' )];
+        for ( let i = 0; i < snakeBody.length; i++ ) {
+            snakeBody[i].classList.add( "snakeBody" );
+        }
+        snakeBody[0].classList.add( "snakeHead" );
+        console.log( "createSnake: x=" + x + " y=" + y );
 
-    for ( let item of snakeBody ) {
-        if ( item.classList.contains( 'apple' ) ) { //РїСЂРѕРІРµСЂРєР° РЅР° РЅР°Р»РёС‡РёРµ РєР»Р°СЃСЃР°
-            console.log( "ReCreating of Snake" );
-            for ( let i = 0; i < snakeBody.length; i++ ) {
-                snakeBody[i].classList.remove( "snakeBody" );
+        for ( let item of snakeBody ) {
+            if ( item.classList.contains( 'apple' ) ) { //проверка на наличие класса
+                console.log( "ReCreating of Snake" );
+                for ( let i = 0; i < snakeBody.length; i++ ) {
+                    snakeBody[i].classList.remove( "snakeBody" );
+                }
+                snakeBody[0].classList.remove( "snakeHead" );
+                createSnake();
             }
-            snakeBody[0].classList.remove( "snakeHead" );
-            createSnake();
         }
     }
-}
-function gameOver() {
+    function gameOver() {
 
-    Swal.fire( {
-        imageUrl: 'img/snakeImg.png',
-        imageHeight: 150,
-        title: 'GOOD GAME!',
-        width: 600,
-        text: 'Your score: ' + score,
-        padding: '3em',
-        background: '#fff',
-        backdrop: `
+        Swal.fire( {
+            imageUrl: 'img/snakeImg.png',
+            imageHeight: 150,
+            title: 'GOOD GAME!',
+            width: 600,
+            text: 'Your score: ' + score,
+            padding: '3em',
+            background: '#fff',
+            backdrop: `
              rgba(0,0,123,0.4)
              url("img/nyan-cat.gif")
              left top
              repeat
              `
-    } )
+        } )
 
-}
-
-createObject( "apple" );
-createSnake();
-startGame();
-
-function startGame() {
-    move();
-}
-
-function move() {
-    clearInterval( interval );
-    interval = setInterval( move, speed );
-    snakeBody[0].classList.remove( "snakeHead" );
-    snakeBody[snakeBody.length - 1].classList.remove( "snakeBody" );
-    snakeBody.pop();
-    //console.log( "snakeBody.length= " + snakeBody.length );
-    if ( direction == 'left' ) {
-        if ( x > 1 ) {
-            x -= 1;
-            snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
-
-        } else {
-            x = 20;
-            snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
-        }
-    }
-    if ( direction == 'right' ) {
-        if ( x < 20 ) {
-            x += 1;
-            snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
-
-        } else {
-            x = 1;
-            snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
-        }
-    }
-    if ( direction == 'up' ) {
-        if ( y > 1 ) {
-            y -= 1;
-            snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
-
-        } else {
-            y = 20;
-            snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
-        }
-    }
-    if ( direction == 'down' ) {
-        if ( y < 20 ) {
-            y += 1;
-            snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
-
-        } else {
-            y = 1;
-            snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
-        }
     }
 
-    let apples = document.querySelectorAll( ".apple" );
-    for ( let apple of apples ) {
-        if ( apple.getAttribute( 'x' ) == snakeBody[0].getAttribute( 'x' ) &&
-            apple.getAttribute( 'y' ) == snakeBody[0].getAttribute( 'y' ) ) {
-            console.log( "Eat!" );
-            score += 1;
-            changeText();
-            if ( speed >= 100 ) {
-                speed -= 10;
-                clearInterval( interval );
-                interval = setInterval( move, speed );
-            } else if ( speed >= 50 && speed < 100 ) {
-                speed -= 5;
-                clearInterval( interval );
-                interval = setInterval( move, speed );
-            }
+    createObject( "apple" );
+    createSnake();
+    startGame();
 
-            console.log( "speed: " + speed );
-            setSpeed();
-            // console.log( "score=" + score );
-            apple.classList.remove( "apple" );
-            countApples -= 1;
-            AppleDiv.innerHTML = 'x ' + countApples;
-            // console.log( "countApples= " + countApples );
-
-            if ( countApples <= 0 ) {
-                createObject( "apple" );
-                console.log( "Respawn!" );
-            }
-
-            let tempX = snakeBody[snakeBody.length - 1].getAttribute( 'x' );
-            let tempY = snakeBody[snakeBody.length - 1].getAttribute( 'y' );
-            snakeBody.push( document.querySelector( '[x="' + tempX + '"][y="' + tempY + '"]' ) );
-        }
+    function startGame() {
+        move();
     }
 
-    if ( snakeBody[0].classList.contains( 'snakeBody' ) ) {
-        console.log( "GAME OVER!!!" );
+    function move() {
         clearInterval( interval );
-        gameOver();
-    }
+        interval = setInterval( move, speed );
+        snakeBody[0].classList.remove( "snakeHead" );
+        snakeBody[snakeBody.length - 1].classList.remove( "snakeBody" );
+        snakeBody.pop();
+        //console.log( "snakeBody.length= " + snakeBody.length );
+        if ( direction == 'left' ) {
+            if ( x > 1 ) {
+                x -= 1;
+                snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
 
-    snakeBody[0].classList.add( "snakeHead" );
-    for ( let i = 0; i < snakeBody.length; i++ ) {
-        snakeBody[i].classList.add( "snakeBody" );
-
-    }
-    kostil = true;
-}
-
-window.addEventListener( 'keydown', function ( e ) {
-
-    if ( kostil == true ) {
-
-        if ( e.keyCode === 37 && direction !== 'right' ) {
-            //   console.log( "left" );
-            direction = 'left';
-            kostil = false;
-        } else if ( e.keyCode === 38 && direction !== 'down' ) {
-            direction = 'up';
-            // console.log( "up" );
-            kostil = false;
-        } else if ( e.keyCode === 39 && direction !== 'left' ) {
-            direction = 'right';
-            //console.log( "right" );
-            kostil = false;
-        } else if ( e.keyCode === 40 && direction !== 'up' ) {
-            direction = 'down';
-            //console.log( "down" );
-            kostil = false;
+            } else {
+                x = 20;
+                snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
+            }
         }
+        if ( direction == 'right' ) {
+            if ( x < 20 ) {
+                x += 1;
+                snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
+
+            } else {
+                x = 1;
+                snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
+            }
+        }
+        if ( direction == 'up' ) {
+            if ( y > 1 ) {
+                y -= 1;
+                snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
+
+            } else {
+                y = 20;
+                snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
+            }
+        }
+        if ( direction == 'down' ) {
+            if ( y < 20 ) {
+                y += 1;
+                snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
+
+            } else {
+                y = 1;
+                snakeBody.unshift( document.querySelector( ' [x = "' + x + '"][y = "' + y + '"] ' ) );
+            }
+        }
+
+        let apples = document.querySelectorAll( ".apple" );
+        for ( let apple of apples ) {
+            if ( apple.getAttribute( 'x' ) == snakeBody[0].getAttribute( 'x' ) &&
+                apple.getAttribute( 'y' ) == snakeBody[0].getAttribute( 'y' ) ) {
+                console.log( "Eat!" );
+                score += 1;
+                changeText();
+                if ( speed >= 100 ) {
+                    speed -= 10;
+                    clearInterval( interval );
+                    interval = setInterval( move, speed );
+                } else if ( speed >= 50 && speed < 100 ) {
+                    speed -= 5;
+                    clearInterval( interval );
+                    interval = setInterval( move, speed );
+                }
+
+                console.log( "speed: " + speed );
+                setSpeed();
+                // console.log( "score=" + score );
+                apple.classList.remove( "apple" );
+                countApples -= 1;
+                AppleDiv.innerHTML = 'x ' + countApples;
+                // console.log( "countApples= " + countApples );
+
+                if ( countApples <= 0 ) {
+                    createObject( "apple" );
+                    console.log( "Respawn!" );
+                }
+
+                let tempX = snakeBody[snakeBody.length - 1].getAttribute( 'x' );
+                let tempY = snakeBody[snakeBody.length - 1].getAttribute( 'y' );
+                snakeBody.push( document.querySelector( '[x="' + tempX + '"][y="' + tempY + '"]' ) );
+            }
+        }
+
+        if ( snakeBody[0].classList.contains( 'snakeBody' ) ) {
+            console.log( "GAME OVER!!!" );
+            clearInterval( interval );
+            gameOver();
+        }
+
+        snakeBody[0].classList.add( "snakeHead" );
+        for ( let i = 0; i < snakeBody.length; i++ ) {
+            snakeBody[i].classList.add( "snakeBody" );
+
+        }
+        kostil = true;
     }
 
-    /*
-    switch ( e.code ) //РјРѕР¶РЅРѕ СЃРґРµР»Р°С‚СЊ РїРѕ РЅРѕРјРµСЂСѓ РєР»Р°РІРёС€Рё С‡С‚РѕР± РґРІРёРіР°С‚СЊ С‡РµСЂРµР· WASD + СЃС‚СЂРµР»РєРё.{
-    case 'ArrowDown':
-    console.log( "left" );
-    break;
-    case ( 38  ):
+    window.addEventListener( 'keydown', function ( e ) {
 
-    break;
-    case ( 39 && ( direction !== 'left' ) ):
+        if ( kostil == true ) {
 
-    break;
-    case ( 40 && ( direction !== 'up' ) ):
+            if ( e.keyCode === 37 && direction !== 'right' ) {
+                //   console.log( "left" );
+                direction = 'left';
+                kostil = false;
+            } else if ( e.keyCode === 38 && direction !== 'down' ) {
+                direction = 'up';
+                // console.log( "up" );
+                kostil = false;
+            } else if ( e.keyCode === 39 && direction !== 'left' ) {
+                direction = 'right';
+                //console.log( "right" );
+                kostil = false;
+            } else if ( e.keyCode === 40 && direction !== 'up' ) {
+                direction = 'down';
+                //console.log( "down" );
+                kostil = false;
+            }
+        }
 
-    break;
-    }
-     */
-} );
+        /*
+        switch ( e.code ) //можно сделать по номеру клавиши чтоб двигать через WASD + стрелки.{
+        case 'ArrowDown':
+        console.log( "left" );
+        break;
+        case ( 38  ):
+    
+        break;
+        case ( 39 && ( direction !== 'left' ) ):
+    
+        break;
+        case ( 40 && ( direction !== 'up' ) ):
+    
+        break;
+        }
+         */
+    } );
+
